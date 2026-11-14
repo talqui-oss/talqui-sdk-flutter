@@ -1,0 +1,19 @@
+name: talqui_flutter_example
+description: A small app with an "Open chat" button and a "Chat" tab.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  talqui_flutter:
+    path: ../
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

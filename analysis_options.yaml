@@ -1,0 +1,12 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - build/**
+  errors:
+    # material.dart moved to package:material_ui in Flutter 3.47; this package supports 3.24+, where that package does not exist yet.
+    deprecated_member_use: ignore
+
+linter:
+  rules:
+    prefer_single_quotes: true
