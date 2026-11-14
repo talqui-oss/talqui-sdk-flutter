@@ -2,8 +2,8 @@ name: talqui_flutter
 description: Add Talqui live chat to your Flutter app. Full screen or inline, identified users, conversation data and chat events.
 version: 0.1.0
 homepage: https://docs.talqui.chat/guides/chat-sdks/flutter
-repository: https://github.com/talqui-oss/flutter-sdk
-issue_tracker: https://github.com/talqui-oss/flutter-sdk/issues
+repository: https://github.com/talqui-oss/talqui-sdk-flutter
+issue_tracker: https://github.com/talqui-oss/talqui-sdk-flutter/issues
 topics: [chat, live-chat, customer-support, webview, talqui]
 
 environment:
