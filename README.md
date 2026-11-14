@@ -86,8 +86,10 @@ That's it. The chat opens in a full-screen route and closes with the header butt
 ### Inline, in a tab
 
 ```dart
-TalquiChat(controller: talqui)
+TalquiChat(controller: talqui, hideCloseButton: true)
 ```
+
+`hideCloseButton` removes the close button from the chat header, which has nothing to close in a tab. Full screen always keeps it.
 
 ## Identify users
 
@@ -185,6 +187,7 @@ await talqui.logout();
 | `controller` | `TalquiController` | Required. |
 | `loading` | `Widget?` | Replaces the loading indicator. |
 | `error` | `Widget Function(VoidCallback retry)?` | Replaces the screen shown when the chat cannot load. |
+| `hideCloseButton` | `bool` | Hides the header's close button here. Default `false`. |
 
 ## Permissions
 

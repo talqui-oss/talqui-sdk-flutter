@@ -47,7 +47,7 @@ class _ExampleAppState extends State<ExampleApp> {
             children: [
               HomeScreen(talqui: talqui),
               // Mounted only while selected: one chat on screen at a time.
-              if (tab == 1) TalquiChat(controller: talqui) else const SizedBox.shrink(),
+              if (tab == 1) TalquiChat(controller: talqui, hideCloseButton: true) else const SizedBox.shrink(),
             ],
           ),
         ),

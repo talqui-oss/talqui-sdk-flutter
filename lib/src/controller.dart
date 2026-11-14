@@ -99,7 +99,9 @@ class TalquiController extends ChangeNotifier with WidgetsBindingObserver {
   String? _pendingPrefill;
   int _commandSeq = 0;
 
-  int _hosts = 0;
+  /// Mounted [TalquiChat]s, in mount order, with whether each asked to hide the close control.
+  final Map<Object, bool> _hosts = {};
+  bool _pageCloseButtonHidden = false;
   bool _routeOpen = false;
   bool _appActive = true;
   Route<void>? _route;
@@ -236,17 +238,27 @@ class TalquiController extends ChangeNotifier with WidgetsBindingObserver {
   @internal
   WebViewController? get webView => _webView;
 
+  /// `owner` is the [TalquiChat] state; `hideCloseButton` is its wish for the header's close control.
   @internal
-  void attachHost() {
-    _hosts++;
+  void attachHost(Object owner, {bool hideCloseButton = false}) {
+    _hosts[owner] = hideCloseButton;
     unawaited(_ensureWebView());
     _syncVisibility();
+    _syncCloseButton();
   }
 
   @internal
-  void detachHost() {
-    _hosts = (_hosts - 1).clamp(0, 1 << 20);
+  void updateHost(Object owner, {required bool hideCloseButton}) {
+    if (!_hosts.containsKey(owner)) return;
+    _hosts[owner] = hideCloseButton;
+    _syncCloseButton();
+  }
+
+  @internal
+  void detachHost(Object owner) {
+    _hosts.remove(owner);
     _syncVisibility();
+    _syncCloseButton();
   }
 
   @internal
@@ -407,6 +419,9 @@ class TalquiController extends ChangeNotifier with WidgetsBindingObserver {
     if (_contactMeta.isNotEmpty) _send('setContactMeta', _contactMeta);
     if (_sessionMeta.isNotEmpty) _send('setSessionMeta', _sessionMeta);
     _send('setVisibility', {'visible': _visible});
+    // A freshly loaded page shows the control again.
+    _pageCloseButtonHidden = false;
+    _syncCloseButton();
     final prefill = _pendingPrefill;
     if (prefill != null) {
       _pendingPrefill = null;
@@ -421,9 +436,19 @@ class TalquiController extends ChangeNotifier with WidgetsBindingObserver {
     _pendingPrefill = null;
   }
 
-  bool get _visible => _appActive && (_routeOpen || _hosts > 0);
+  bool get _visible => _appActive && (_routeOpen || _hosts.isNotEmpty);
 
   void _syncVisibility() => _send('setVisibility', {'visible': _visible});
+
+  /// The most recently attached host decides (the full-screen route never hides it).
+  bool get _closeButtonHidden => _hosts.isNotEmpty && _hosts.values.last;
+
+  /// Sent only on a change, so an app that never hides the control never sends the command.
+  void _syncCloseButton() {
+    if (!_ready || _pageCloseButtonHidden == _closeButtonHidden) return;
+    _pageCloseButtonHidden = _closeButtonHidden;
+    _send('setCloseButton', {'visible': !_closeButtonHidden});
+  }
 
   void _send(String name, Map<String, Object?> payload) {
     // Before `ready` there is nothing to send to: the replay is delivered on `ready`.

@@ -8,9 +8,13 @@ import 'controller.dart';
 ///
 /// Keep one on screen at a time: they share the controller's page.
 class TalquiChat extends StatefulWidget {
-  const TalquiChat({super.key, required this.controller, this.loading, this.error});
+  const TalquiChat({super.key, required this.controller, this.loading, this.error, this.hideCloseButton = false});
 
   final TalquiController controller;
+
+  /// Hides the close control in the chat header, which has nothing to close in
+  /// a tab. Only affects the chat shown here: [TalquiController.open] always keeps it.
+  final bool hideCloseButton;
 
   /// Replaces the spinner shown while the chat loads.
   final Widget? loading;
@@ -26,12 +30,20 @@ class _TalquiChatState extends State<TalquiChat> {
   @override
   void initState() {
     super.initState();
-    widget.controller.attachHost();
+    widget.controller.attachHost(this, hideCloseButton: widget.hideCloseButton);
+  }
+
+  @override
+  void didUpdateWidget(TalquiChat oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.hideCloseButton != widget.hideCloseButton) {
+      widget.controller.updateHost(this, hideCloseButton: widget.hideCloseButton);
+    }
   }
 
   @override
   void dispose() {
-    widget.controller.detachHost();
+    widget.controller.detachHost(this);
     super.dispose();
   }
 
