@@ -16,4 +16,8 @@ jobs:
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test
+      - name: SDK label matches the pubspec version
+        run: |
+          version="$(sed -n 's/^version: *//p' pubspec.yaml | tr -d '[:space:]')"
+          grep -q "flutter@$version'" lib/src/protocol.dart
       - run: flutter pub publish --dry-run

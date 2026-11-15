@@ -14,6 +14,8 @@
 <div align="center">
 <a href="https://docs.talqui.chat/guides/chat-sdks/flutter">Documentation</a>
 <span> · </span>
+<a href="https://github.com/talqui-oss/talqui-sdk-flutter/blob/main/AGENT_INSTRUCTIONS.md">AI agent instructions</a>
+<span> · </span>
 <a href="https://pub.dev/packages/talqui_sdk_flutter">pub.dev</a>
 <span> · </span>
 <a href="https://github.com/talqui-oss/talqui-sdk-flutter/tree/main/example">Example app</a>
@@ -66,6 +68,8 @@ What your users see, from the [example app](https://github.com/talqui-oss/talqui
 | Android | 7.0 (API 24) |
 
 ## Install
+
+> Using an AI coding agent? Point it to [`AGENT_INSTRUCTIONS.md`](https://github.com/talqui-oss/talqui-sdk-flutter/blob/main/AGENT_INSTRUCTIONS.md): a step-by-step install it can follow and validate on its own.
 
 ```bash
 flutter pub add talqui_sdk_flutter
