@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:talqui_sdk_flutter/src/controller.dart';
 import 'package:talqui_sdk_flutter/src/protocol.dart';
 
 const tenant = 'a0047199-8537-4f7d-bef8-2fae04a7ffd6';
@@ -82,5 +83,11 @@ void main() {
   test('userHash must look like a hash, not a raw id', () {
     expect(userHashPattern.hasMatch('f' * 64), isTrue);
     expect(userHashPattern.hasMatch('123'), isFalse);
+  });
+
+  test('recognizes only Talqui push messages', () {
+    expect(TalquiController.isTalquiPush({'talqui': '1', 'tenantId': tenant}), isTrue);
+    expect(TalquiController.isTalquiPush({'talqui': 1}), isFalse);
+    expect(TalquiController.isTalquiPush({'type': 'promo'}), isFalse);
   });
 }
