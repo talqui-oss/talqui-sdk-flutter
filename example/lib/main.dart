@@ -35,7 +35,7 @@ class _ExampleAppState extends State<ExampleApp> {
     if (talquiPushEnabled) _setupPush();
   }
 
-  /// Replies reach the user while the app is closed (WebChat → Notificações → "Via Talqui").
+  /// Replies reach the user while the app is closed (WebChat → Notificações → "Pela Talqui").
   Future<void> _setupPush() async {
     await Firebase.initializeApp();
     final messaging = FirebaseMessaging.instance;

@@ -14,8 +14,8 @@ Use your own workspace with `--dart-define=TALQUI_TENANT_ID=… --dart-define=TA
 
 Off by default, so the example runs without Firebase. The code is in `_setupPush` (`lib/main.dart`). To try it:
 
-1. In app.talqui.chat → Plugins → WebChat → **Notificações**, choose **Via Talqui** and upload a service account of your Firebase project (the "Firebase Cloud Messaging API Admin" role is enough).
+1. In app.talqui.chat → Plugins → WebChat → **Notificações**, choose **Pela Talqui** and upload a service account of your Firebase project (the "Firebase Cloud Messaging API Admin" role is enough).
 2. Add the app to that Firebase project: `android/app/google-services.json` for Android; `ios/Runner/GoogleService-Info.plist` plus the Push Notifications capability in Xcode and your APNs key uploaded in Firebase for iOS.
-3. `flutter run --dart-define=TALQUI_PUSH=1`
+3. `flutter run --dart-define=TALQUI_PUSH=true`
 
 Talqui only notifies when the chat is not on screen, at most once per conversation every 5 minutes. Tapping the notification opens the chat.

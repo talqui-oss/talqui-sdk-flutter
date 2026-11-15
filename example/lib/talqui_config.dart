@@ -10,5 +10,5 @@ const talquiConnectionId = String.fromEnvironment('TALQUI_CONNECTION_ID', defaul
 const talquiBaseUrl = String.fromEnvironment('TALQUI_BASE_URL');
 
 /// Push notifications demo, off by default so the example runs without Firebase.
-/// Turn it on with `--dart-define=TALQUI_PUSH=1`; see "Push notifications" in example/README.md.
+/// Turn it on with `--dart-define=TALQUI_PUSH=true`; see "Push notifications" in example/README.md.
 const bool talquiPushEnabled = bool.fromEnvironment('TALQUI_PUSH');
