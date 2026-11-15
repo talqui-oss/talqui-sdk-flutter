@@ -1,4 +1,4 @@
-![Talqui Flutter SDK](https://raw.githubusercontent.com/talqui-oss/talqui-sdk-flutter/main/.github/assets/cover.png)
+![Talqui Flutter SDK](.github/assets/cover.png)
 
 <div align="center"><strong>Talqui for Flutter</strong></div>
 <div align="center">Live chat for your Flutter apps on iOS and Android.<br />Your users talk to your team, bots and AI agents without leaving the app.</div>
