@@ -34,6 +34,27 @@
 - **Attachments work on Android** out of the box: the file picker is wired for you.
 - **Small surface.** One controller, one widget. No state management library required.
 
+## Screenshots
+
+What your users see, from the [example app](https://github.com/talqui-oss/talqui-sdk-flutter/tree/main/example) on Android.
+
+<table align="center">
+  <tr>
+    <td width="33%">
+      <img src="https://raw.githubusercontent.com/talqui-oss/talqui-sdk-flutter/main/.github/assets/screenshot-1-unread.png" alt="Unread count in the host app" />
+      <p align="center"><strong>Unread count</strong><br />Replies that arrive while the chat is closed</p>
+    </td>
+    <td width="33%">
+      <img src="https://raw.githubusercontent.com/talqui-oss/talqui-sdk-flutter/main/.github/assets/screenshot-2-fullscreen.png" alt="Full screen chat with text, an image and a voice message" />
+      <p align="center"><strong>Full screen chat</strong><br />Text, images and voice messages</p>
+    </td>
+    <td width="33%">
+      <img src="https://raw.githubusercontent.com/talqui-oss/talqui-sdk-flutter/main/.github/assets/screenshot-3-inline-tab.png" alt="The chat inline in a tab" />
+      <p align="center"><strong>Inline in a tab</strong><br /><code>TalquiChat(hideCloseButton: true)</code></p>
+    </td>
+  </tr>
+</table>
+
 ## Requirements
 
 | | Minimum |
