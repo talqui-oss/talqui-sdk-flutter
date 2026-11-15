@@ -2,7 +2,7 @@
 
 > If a `TALQUI_GUIDELINES.md` file exists at the repository root, read it before doing anything else. It is mandatory for maintainers.
 
-`talqui_flutter`: the Talqui live chat for Flutter. A thin layer over `webview_flutter` that hosts the Talqui WebChat (`https://webchat.talqui.chat`) and talks to it through the bridge protocol in `doc/BRIDGE_PROTOCOL.md`.
+`talqui_sdk_flutter`: the Talqui live chat for Flutter. A thin layer over `webview_flutter` that hosts the Talqui WebChat (`https://webchat.talqui.chat`) and talks to it through the bridge protocol in `doc/BRIDGE_PROTOCOL.md`.
 
 ## Commands
 

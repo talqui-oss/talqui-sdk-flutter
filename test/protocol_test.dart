@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:talqui_flutter/src/protocol.dart';
+import 'package:talqui_sdk_flutter/src/protocol.dart';
 
 const tenant = 'a0047199-8537-4f7d-bef8-2fae04a7ffd6';
 const connection = 'a575c54c-4f0e-49e9-87c1-1b80df59e9df';

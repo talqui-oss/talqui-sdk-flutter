@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:talqui_flutter/talqui_flutter.dart';
+import 'package:talqui_sdk_flutter/talqui_sdk_flutter.dart';
 
 import 'talqui_config.dart';
 

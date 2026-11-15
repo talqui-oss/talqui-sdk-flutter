@@ -5,16 +5,16 @@
 <br />
 <div align="center">
 
-[![pub.dev](https://img.shields.io/pub/v/talqui_flutter?color=0175c2&logo=dart)](https://pub.dev/packages/talqui_flutter)
+[![pub.dev](https://img.shields.io/pub/v/talqui_sdk_flutter?color=0175c2&logo=dart)](https://pub.dev/packages/talqui_sdk_flutter)
 [![Flutter](https://img.shields.io/badge/flutter-%3E%3D3.24-02569b?logo=flutter&logoColor=white)](https://flutter.dev)
-[![Platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20Android-lightgrey)](https://pub.dev/packages/talqui_flutter)
+[![Platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20Android-lightgrey)](https://pub.dev/packages/talqui_sdk_flutter)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/talqui-oss/talqui-sdk-flutter/blob/main/LICENSE)
 
 </div>
 <div align="center">
 <a href="https://docs.talqui.chat/guides/chat-sdks/flutter">Documentation</a>
 <span> · </span>
-<a href="https://pub.dev/packages/talqui_flutter">pub.dev</a>
+<a href="https://pub.dev/packages/talqui_sdk_flutter">pub.dev</a>
 <span> · </span>
 <a href="https://github.com/talqui-oss/talqui-sdk-flutter/tree/main/example">Example app</a>
 <span> · </span>
@@ -66,7 +66,7 @@ What your users see, from the [example app](https://github.com/talqui-oss/talqui
 ## Install
 
 ```bash
-flutter pub add talqui_flutter
+flutter pub add talqui_sdk_flutter
 ```
 
 ## Get your IDs
@@ -82,7 +82,7 @@ You need two values from your Talqui workspace, both on **app.talqui.chat → Pl
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:talqui_flutter/talqui_flutter.dart';
+import 'package:talqui_sdk_flutter/talqui_sdk_flutter.dart';
 
 final talqui = TalquiController(
   tenantId: 'YOUR_TENANT_ID',

@@ -39,7 +39,7 @@ jobs:
       - name: Publish
         run: |
           # Already on pub.dev (the first version is published by hand): only release.
-          if curl -fs "https://pub.dev/api/packages/talqui_flutter/versions/$VERSION" >/dev/null; then
+          if curl -fs "https://pub.dev/api/packages/talqui_sdk_flutter/versions/$VERSION" >/dev/null; then
             echo "$VERSION is already on pub.dev"
           else
             flutter pub publish --force
