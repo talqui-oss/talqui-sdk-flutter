@@ -5,7 +5,7 @@ import 'dart:convert';
 /// come out through the `TalquiNative` JavaScript channel.
 const int talquiProtocol = 1;
 const String talquiDefaultBaseUrl = 'https://webchat.talqui.chat';
-const String talquiSdkLabel = 'flutter@0.1.1';
+const String talquiSdkLabel = 'flutter@0.2.0';
 
 final RegExp _uuid = RegExp(r'^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$', caseSensitive: false);
 final RegExp identityPattern = RegExp(r'^[A-Za-z0-9_-]{8,128}$');
