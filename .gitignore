@@ -6,3 +6,7 @@ example/build/
 example/.dart_tool/
 .DS_Store
 TALQUI_GUIDELINES.md
+
+# Firebase config of whoever runs the push demo
+example/android/app/google-services.json
+example/ios/Runner/GoogleService-Info.plist

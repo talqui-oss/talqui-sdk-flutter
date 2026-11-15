@@ -97,6 +97,7 @@ class TalquiController extends ChangeNotifier with WidgetsBindingObserver {
   Map<String, String?> _contactMeta = {};
   Map<String, String?> _sessionMeta = {};
   String? _pendingPrefill;
+  String? _pushToken;
   int _commandSeq = 0;
 
   /// Mounted [TalquiChat]s, in mount order, with whether each asked to hide the close control.
@@ -203,6 +204,28 @@ class TalquiController extends ChangeNotifier with WidgetsBindingObserver {
     _send('setSessionMeta', normalized);
   }
 
+  /// The device's Firebase Cloud Messaging token, so a reply reaches the user while
+  /// the app is closed. Works when the WebChat connection sends notifications
+  /// "through Talqui" with your Firebase project (Settings → WebChat → Notificações).
+  /// Call it at startup and again from `FirebaseMessaging.onTokenRefresh`.
+  void setPushToken(String token) {
+    final trimmed = token.trim();
+    if (trimmed.isEmpty) return;
+    _pushToken = trimmed;
+    _send('registerPushToken', {'token': trimmed, 'platform': _platform});
+  }
+
+  /// Whether a push message was sent by Talqui (check `RemoteMessage.data`).
+  static bool isTalquiPush(Map<String, dynamic> data) => data['talqui'] == '1';
+
+  /// Opens the chat when the user taps a Talqui notification. Returns whether it was one,
+  /// so the app can handle its own notifications otherwise.
+  Future<bool> handlePush(BuildContext context, Map<String, dynamic> data) async {
+    if (!isTalquiPush(data) || data['tenantId'] != tenantId) return false;
+    await open(context);
+    return true;
+  }
+
   /// Puts text in the message box. The user still decides to send it.
   void prefill(String text) {
     final trimmed = text.trim();
@@ -220,6 +243,9 @@ class TalquiController extends ChangeNotifier with WidgetsBindingObserver {
     if (_ready && _webView != null) {
       // Ask the page to drop the conversation now, but never hang on it.
       final done = events.firstWhere((e) => e.name == 'resetDone').timeout(_resetTimeout, onTimeout: () => const TalquiEvent('resetDone', {}));
+      // The next person on this phone must not get this user's replies.
+      final token = _pushToken;
+      if (token != null) _send('unregisterPushToken', {'token': token});
       _send('reset', {});
       await done.catchError((_) => const TalquiEvent('resetDone', {}));
     }
@@ -419,6 +445,8 @@ class TalquiController extends ChangeNotifier with WidgetsBindingObserver {
     if (_contactMeta.isNotEmpty) _send('setContactMeta', _contactMeta);
     if (_sessionMeta.isNotEmpty) _send('setSessionMeta', _sessionMeta);
     _send('setVisibility', {'visible': _visible});
+    final token = _pushToken;
+    if (token != null) _send('registerPushToken', {'token': token, 'platform': _platform});
     // A freshly loaded page shows the control again.
     _pageCloseButtonHidden = false;
     _syncCloseButton();
@@ -435,6 +463,12 @@ class TalquiController extends ChangeNotifier with WidgetsBindingObserver {
     _sessionMeta = {};
     _pendingPrefill = null;
   }
+
+  String? get _platform => switch (defaultTargetPlatform) {
+        TargetPlatform.iOS => 'ios',
+        TargetPlatform.android => 'android',
+        _ => null,
+      };
 
   bool get _visible => _appActive && (_routeOpen || _hosts.isNotEmpty);
 

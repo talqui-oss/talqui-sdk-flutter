@@ -47,3 +47,8 @@ kotlin {
 flutter {
     source = "../.."
 }
+
+// Push demo only: applied when you drop your own google-services.json here (never committed).
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+}

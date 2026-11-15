@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:talqui_sdk_flutter/talqui_sdk_flutter.dart';
 
@@ -20,6 +24,7 @@ class _ExampleAppState extends State<ExampleApp> {
     debugBaseUrl: talquiBaseUrl.isEmpty ? null : talquiBaseUrl,
     debug: true,
   );
+  final navigatorKey = GlobalKey<NavigatorState>();
   int tab = 0;
 
   @override
@@ -27,6 +32,28 @@ class _ExampleAppState extends State<ExampleApp> {
     super.initState();
     // Your analytics, a banner, a sound: every chat event is available.
     talqui.events.where((e) => e.name == 'messageReceived').listen((e) => debugPrint('New message: ${e.payload['preview']}'));
+    if (talquiPushEnabled) _setupPush();
+  }
+
+  /// Replies reach the user while the app is closed (WebChat → Notificações → "Pela Talqui").
+  Future<void> _setupPush() async {
+    await Firebase.initializeApp();
+    final messaging = FirebaseMessaging.instance;
+    // The token does not depend on the permission; asking never blocks the registration.
+    unawaited(messaging.requestPermission());
+    final token = await messaging.getToken();
+    if (token != null) talqui.setPushToken(token);
+    messaging.onTokenRefresh.listen(talqui.setPushToken);
+
+    // A tap on a Talqui notification opens the chat; anything else is yours.
+    void onTap(RemoteMessage message) {
+      final context = navigatorKey.currentContext;
+      if (context != null) talqui.handlePush(context, message.data);
+    }
+
+    FirebaseMessaging.onMessageOpenedApp.listen(onTap);
+    final initial = await messaging.getInitialMessage();
+    if (initial != null) onTap(initial);
   }
 
   @override
@@ -38,6 +65,7 @@ class _ExampleAppState extends State<ExampleApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       title: 'Talqui example',
       theme: ThemeData(colorSchemeSeed: const Color(0xFF1A66FF), useMaterial3: true),
       home: Scaffold(
@@ -90,7 +118,8 @@ class HomeScreen extends StatelessWidget {
           onPressed: () {
             // In a real app: after login. The userHash comes from YOUR backend, never from the app.
             talqui.identify(const TalquiUser(name: 'Ana Souza', email: 'ana@example.com', phone: '+5511999990000'));
-            talqui.setContactMeta({'plan': 'demo'});
+            // `user_id` reaches your webhook as `contact.userID` (verify it, see the docs).
+            talqui.setContactMeta({'plan': 'demo', 'user_id': 'demo-123'});
             talqui.setSessionMeta({'screen': 'home'});
           },
           child: const Text('Identify demo user'),
