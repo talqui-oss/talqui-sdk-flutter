@@ -1,0 +1,32 @@
+name: release
+
+# pub.dev only accepts automated publishing from a run that a `v*` tag started, and a tag pushed
+# with GITHUB_TOKEN starts no workflow. So on main, when pubspec.yaml carries a version with no
+# tag yet, this tags the commit and dispatches publish.yml on that tag.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Tag a new version and publish it
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="v$(sed -n 's/^version: *//p' pubspec.yaml | tr -d '[:space:]')"
+          if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
+            echo "Nothing to release: $tag is already tagged"
+            exit 0
+          fi
+          git tag "$tag"
+          git push origin "$tag"
+          gh workflow run publish.yml --ref "$tag"

@@ -29,3 +29,7 @@ cd example && flutter run -t lib/smoke.dart  # unattended smoke run (logs every 
 - Never present the chat in a bottom sheet.
 - The bridge protocol is additive only. Never send a command the WebChat does not document.
 - Code, comments and docs in English.
+
+## Releasing
+
+Bump `version` in `pubspec.yaml` and add its section to `CHANGELOG.md` in a PR. Merging to `main` runs `.github/workflows/release.yml`, which tags `vX.Y.Z` and dispatches `publish.yml` on that tag: analyze, tests, then `flutter pub publish` through pub.dev automated publishing (OIDC, no credentials) and a GitHub release. pub.dev only accepts runs started on a tag, which is why the publish lives in its own workflow. Never publish from a laptop.
