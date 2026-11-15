@@ -9,6 +9,6 @@ const talquiConnectionId = String.fromEnvironment('TALQUI_CONNECTION_ID', defaul
 /// Only for developing the SDK against a local WebChat. Leave unset.
 const talquiBaseUrl = String.fromEnvironment('TALQUI_BASE_URL');
 
-/// Push notifications demo (Android): needs `android/app/google-services.json` from your Firebase
-/// project and `--dart-define=TALQUI_PUSH=1`. Off by default so the example runs without Firebase.
+/// Push notifications demo, off by default so the example runs without Firebase.
+/// Turn it on with `--dart-define=TALQUI_PUSH=1`; see "Push notifications" in example/README.md.
 const bool talquiPushEnabled = bool.fromEnvironment('TALQUI_PUSH');
